@@ -1,0 +1,25 @@
+{
+    "name": "node-app",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+      "start": "nodemon -L server/index.js"
+    },
+    "engines": {
+      "node": ">= 6.0.0"
+    },
+    "main": "server/index.js",
+    "keywords": [
+      "node",
+      "mongo"
+    ],
+    "author": "ElenaM",
+    "dependencies": {
+      "bluebird": "3.4.1",
+      "express": "^4.14.0",
+      "mongodb": "^2.2.16"
+    },
+    "devDependencies": {
+      "nodemon": "^1.9.2"
+    }
+  }

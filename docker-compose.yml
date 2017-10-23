@@ -1,0 +1,16 @@
+version: '3'
+services:
+    app:
+        build: ./app
+        ports:
+          - 3000:3000
+        volumes:
+          - ./app/server:/usr/src/app/server
+        links:
+          - mongo
+    mongo:
+        build: ./mongo
+        volumes:
+          - ./mongo/data:/data
+        ports:
+          - 27017:27017
