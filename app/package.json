@@ -1,5 +1,6 @@
 {
     "name": "node-app",
+    "description": "Sample application",
     "version": "0.0.1",
     "private": true,
     "scripts": {
@@ -13,10 +14,12 @@
       "node",
       "mongo"
     ],
+    "license": "MIT",
     "author": "ElenaM",
     "dependencies": {
       "bluebird": "3.4.1",
       "express": "^4.14.0",
+      "express-handlebars": "^v3.0.0",
       "mongodb": "^2.2.16"
     },
     "devDependencies": {
