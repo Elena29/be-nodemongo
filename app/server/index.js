@@ -1,18 +1,29 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const exphbs = require('express-handlebars');
+
+//Initialize application
+const app = express();
+const port = 3000;
+
+// Handlebars Middleware
+app.engine('handlebars', exphbs({
+    defaultLayout: 'main'
+}));
+
+app.set('view engine', 'handlebars');
+
+// Mongo client
 const client = require('mongodb').MongoClient;
 
-app.set('port', 3000)
-
-app.get('/status', (req, res) => {
-    console.log(client)
-    res.send("Hello World2");
-})
-
-app.get('/', function (req, res) {
-    res.send("Hello World");
+app.get('/', (req, res) => {
+    const title = 'Welcome';
+    res.render('index', {title});
 });
 
-app.listen(3000, function () {
-    console.log('Example app listening on port 3000!');
+app.get('/about', (req, res) => {
+    res.render('about');
+});
+
+app.listen(port, () => {
+    console.log(`Server started on port ${port}`);
 });
