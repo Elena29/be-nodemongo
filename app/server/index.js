@@ -1,9 +1,17 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
+const mongoose = require('mongoose');
 
 //Initialize application
 const app = express();
 const port = 3000;
+
+// Connect to mongoose
+mongoose.connect('mongodb://mongo:27017')
+  .then(() => {
+      console.log('MongoDb Connected... ')
+  })
+  .catch(err => console.log(err));
 
 // Handlebars Middleware
 app.engine('handlebars', exphbs({
@@ -11,9 +19,6 @@ app.engine('handlebars', exphbs({
 }));
 
 app.set('view engine', 'handlebars');
-
-// Mongo client
-const client = require('mongodb').MongoClient;
 
 app.get('/', (req, res) => {
     const title = 'Welcome';
