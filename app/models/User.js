@@ -2,16 +2,16 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 //Create Schema
-const ReceiptSchema = new Schema({
-    title: {
+const UserSchema = new Schema({
+    name: {
         type: String,
         required: true
     },
-    details: {
+    email: {
         type: String,
         required: true
     },
-    user: {
+    password: {
         type: String,
         required: true
     },
@@ -21,4 +21,4 @@ const ReceiptSchema = new Schema({
     }
 });
 
-mongoose.model('receipt', ReceiptSchema);
+mongoose.model('user', UserSchema);
