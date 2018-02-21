@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const {ensureAuthenticated} = require('../helpers/auth');
 
 // Load Receipt Model
-require('../models/receipt');
+require('../models/Receipt');
 const Receipt = mongoose.model('receipt');
 
 // Receipts Index

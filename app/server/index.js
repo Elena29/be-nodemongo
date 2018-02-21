@@ -16,7 +16,8 @@ const receipts = require('../routes/receipts');
 const users = require('../routes/users');
 
 // Connect to mongoose
-mongoose.connect('mongodb://mongo:27017')
+const db = require('../config/database');
+mongoose.connect(db.mongoURI)
   .then(() => {
       console.log('MongoDb Connected... ')
   })
@@ -81,7 +82,8 @@ app.use('/users', users);
 // Passport Config
 require('../config/passport')(passport);
 
-const port = 3000;
+const port = process.env.PORT || 3000;
+
 app.listen(port, () => {
     console.log(`Server started on port ${port}`);
 });

@@ -4,7 +4,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "nodemon -L server/index.js"
+    "start": "node server/index.js",
+    "dev": "nodemon -L server/index.js"
   },
   "engines": {
     "node": ">= 6.0.0"
