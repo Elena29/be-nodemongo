@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
+const {ensureAuthenticated} = require('../helpers/auth');
 
 // Load Receipt Model
 require('../models/receipt');
 const Receipt = mongoose.model('receipt');
 
-router.get('/', (req, res) => {
-  Receipt.find({})
+// Receipts Index
+router.get('/', ensureAuthenticated, (req, res) => {
+  Receipt.find({user: req.user.id})
     .sort({date: 'desc'})
     .then(receipts => {
       res.render('receipt/index', {
@@ -17,20 +19,25 @@ router.get('/', (req, res) => {
     });
 });
 
-router.get('/add', (req, res) => {
+router.get('/add', ensureAuthenticated, (req, res) => {
   res.render('receipt/add');
 });
 
-router.get('/edit/:id', (req, res) => {
+router.get('/edit/:id', ensureAuthenticated, (req, res) => {
   Receipt.findOne({
     _id: req.params.id
   })
     .then(receipt => {
-      res.render('receipt/edit', {receipt})
+        if (receipt.user != req.user.id) {
+            req.flash('error_msg', 'Not Authorized');
+            res.redirect('/receipt');
+        } else {
+            res.render('receipt/edit', {receipt})
+        }
     });
 });
 
-router.post('/', (req, res) => {
+router.post('/', ensureAuthenticated, (req, res) => {
   let errors = [];
   if (!req.body.title) {
     errors.push({text: 'Please add a title'});
@@ -44,7 +51,8 @@ router.post('/', (req, res) => {
   } else {
     const newReceipt = {
       title: req.body.title,
-      details: req.body.details
+      details: req.body.details,
+      user: req.user.id
     };
     new Receipt(newReceipt)
       .save()
@@ -55,7 +63,7 @@ router.post('/', (req, res) => {
   }
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', ensureAuthenticated, (req, res) => {
   Receipt.findOne({
     _id: req.params.id
   })
@@ -70,7 +78,7 @@ router.put('/:id', (req, res) => {
     })
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', ensureAuthenticated, (req, res) => {
   Receipt.remove({_id: req.params.id})
     .then(() => {
       req.flash('success_msg', 'Receipt removed');
